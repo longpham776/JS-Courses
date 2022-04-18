@@ -1,4 +1,4 @@
-let counter = document.getElementById("time").value;
+let counter = 60;
 let timeout;
 function startCount(){
     if(counter == 0) clearTimeout(timeout);
