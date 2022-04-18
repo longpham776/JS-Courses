@@ -12,6 +12,7 @@ const image = {
 }
 let board = document.createElement("div");
 board.style.backgroundImage = "url('https://png.pngtree.com/thumb_back/fw800/back_our/20190628/ourmid/pngtree-fresh-bamboo-forest-spring-shoot-background-design-image_275236.jpg')";
+board.id = "mainboard";
 board.style.top = "50%";
 board.style.left = "50%";
 board.style.marginTop = "-250px";
@@ -21,17 +22,16 @@ board.style.height = "500px";
 board.style.position = "fixed";
 document.body.appendChild(board);
 
-
-function createImage(){
-    img = document.createElement("img");
+function createImage(index){
+    let img = document.createElement("img");
     img.style.width = "110px";
     img.style.height = "110px";
     img.style.top = "10px";
     img.style.position = "absolute";
     return img;
 }
-function createCover() {
-    cover = document.createElement("div");
+function createCover(index) {
+    let cover = document.createElement("div");
     cover.style.background = "orange";
     cover.style.width = "110px";
     cover.style.height = "110px";
@@ -61,79 +61,49 @@ function shuffleCards(){
     return arrImage;
 }
 
+function checkCard(){
+    return firstCard[img].localeCompare(secondCard[img]);
+}
+
 arrShuffle=[].concat(shuffleCards());
 
+const firstCard = {img:""};
+const secondCard = {img:""};
+
+let score = 10000;
+
+let countClick = 0;
+
 for (let i = 1; i <= 20; i++) {
+    let img = board.appendChild(createImage(i));
+    let cover = img.appendChild(createCover(i));
+    cover.appendChild(createLabel(i));
+    img.src = image[arrShuffle[i-1]];
+    img.alt = arrShuffle[i-1];
+    img.addEventListener("click",function(){
+        console.log(document.querySelectorAll("mainboard,img")[i-1].src);
+    });
+    img.style.left = `${length}px`;
     if(i <= 5){
-        board.appendChild(createImage());
-        img.appendChild(createCover());
-        img.src = image[arrShuffle[i-1]];
-        img.style.left = `${length}px`;
-        cover.style.left = `${length}px`;
-        cover.appendChild(createLabel(i));
         length += 120;
     }else if(i > 5 && i <= 10){
-        board.appendChild(createImage());
-        img.src = image[arrShuffle[i-1]];
         if(i == 6) length = 10;
         img.style.left = `${length}px`;
         img.style.top = "130px";
-        img.appendChild(createLabel(i));
         length += 120;
     }else if(i > 10 && i <= 15){
-        board.appendChild(createImage());
-        img.src = image[arrShuffle[i-1]];
         if(i == 11) length = 10;
         img.style.left = `${length}px`;
         img.style.top = "250px";
-        img.appendChild(createLabel(i));
         length += 120;
     }else if(i > 15 && i <= 20){
-        board.appendChild(createImage());
-        img.src = image[arrShuffle[i-1]];
         if(i == 16) length = 10;
         img.style.left = `${length}px`;
         img.style.top = "370px";
-        img.appendChild(createLabel(i));
         length += 120;
     }
 }
-// for (let j = 1; j <= 20;j++){
-//     if(j <= 5){
-//         board.appendChild(createImage().appendChild(createCover()));
-//         img.style.left = `${length}px`;
-//         cover.style.left = `${length}px`;
-//         cover.appendChild(createLabel(j));
-//         length += 120;
-//     }else if(j > 5 && j <= 10){
-//         board.appendChild(createImage().appendChild(createCover()));
-//         if(j == 6) length = 10;
-//         img.style.left = `${length}px`;
-//         img.style.top = "130px";
-//         cover.style.left = `${length}px`;
-//         cover.style.top = "130px";
-//         cover.appendChild(createLabel(j));
-//         length += 120;
-//     }else if(j > 10 && j <= 15){
-//         board.appendChild(createImage().appendChild(createCover()));
-//         if(j == 11) length = 10;
-//         img.style.left = `${length}px`;
-//         img.style.top = "250px";
-//         cover.style.left = `${length}px`;
-//         cover.style.top = "250px";
-//         cover.appendChild(createLabel(j));
-//         length += 120;
-//     }else if(j > 15 && j <= 20){
-//         board.appendChild(createImage().appendChild(createCover()));
-//         if(j == 16) length = 10;
-//         img.style.left = `${length}px`;
-//         img.style.top = "370px";
-//         cover.style.left = `${length}px`;
-//         cover.style.top = "370px";
-//         cover.appendChild(createLabel(j));
-//         length += 120;
-//     }
-// }
+
 // create card
     // create image
     // create cover

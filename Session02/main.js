@@ -1,5 +1,10 @@
+let counter = document.getElementById("time").value;
+let timeout;
 function startCount(){
-    
+    if(counter == 0) clearTimeout(timeout);
+    document.getElementById("time").value = counter;
+    counter--;
+    timeout = setTimeout(startCount,1000);
 }
 function clockTimer(){
     const date = new Date();
