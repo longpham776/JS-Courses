@@ -22,6 +22,10 @@ export class Card extends Node {
         cover.width = 100;
         cover.height = 100;
         cover.elm.id = this.index;
+        cover.elm.addEventListener("click",()=>{
+            this.open(cover);
+        });
+        cover.elm.style.display = "block";
         cover.elm.style.backgroundColor = "orange";
         cover.elm.style.border = "solid 1px blue";
         this.cover = cover;
@@ -39,11 +43,14 @@ export class Card extends Node {
         this.value = value;
         this.sprite.path = "./images/trucxanh" + value + ".jpg";
     }
-    open() {
-
+    open(cover) {
+        if(cover.elm.style.display === "block"){
+            cover.elm.style.display = "none";
+            this.label.elm.style.display = "none";
+        }
     }
     close() {
-
+        
     }
     hide() {
 

@@ -14,9 +14,15 @@ class Game extends Node {
     _createCards() {
         this.cards = [];
         let img = 0;
+        this.firstCard = null;
+        //his.firstCard.open()
+        this.secondCard = null;
         // for 
         for (let index = 0; index < 20;index++){
             this.card = new Card(index+1);
+            this.card.elm.addEventListener("click",()=>{
+                this.onClickCard(this.card);
+            });
             this.card.elm.id = "card"+(index+1);
             if(img > 9) img = 0;
             this.card.setValue(img);
@@ -36,10 +42,14 @@ class Game extends Node {
 
     }
 
-    onClickCard(){
-
+    onClickCard(card){
+        if(this.firstCard === null) this.firstCard = card;
+        else if(this.firstCard) this.secondCard = card;
+        else this.compareCard(this.firstCard,this.secondCard);
+        console.log(this.firstCard);
+        console.log(this.secondCard);
     }
-    compareCard(){
+    compareCard(firstCard,secondCard){
 
     }
     resetGame(){
@@ -48,7 +58,7 @@ class Game extends Node {
 }
 
 let game = new Game();
-document.body.appendChild(game.elm);
 game.elm.id = "mainboard";
 game.elm.style.left = "35%";
 game.elm.style.top = "30%";
+document.body.appendChild(game.elm);
