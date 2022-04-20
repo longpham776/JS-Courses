@@ -21,10 +21,6 @@ export class Card extends Node {
         let cover = new Node();
         cover.width = 100;
         cover.height = 100;
-        cover.elm.id = this.index;
-        cover.elm.addEventListener("click",()=>{
-            this.open(cover);
-        });
         cover.elm.style.display = "block";
         cover.elm.style.backgroundColor = "orange";
         cover.elm.style.border = "solid 1px blue";
@@ -33,9 +29,10 @@ export class Card extends Node {
     }
     _createLabel() {
         this.label = new Label();
-        this.label.elm.style.fontSize = "30px";
-        this.label.elm.style.top = "35px";
-        this.label.elm.style.left = "40px";
+        this.label.fontSize = 30;
+        this.label.fontColor = "white";
+        this.label.y = 35;
+        this.label.x = 40;
         this.label.text = this.index;
         this.addChild(this.label);
     }
@@ -43,16 +40,15 @@ export class Card extends Node {
         this.value = value;
         this.sprite.path = "./images/trucxanh" + value + ".jpg";
     }
-    open(cover) {
-        if(cover.elm.style.display === "block"){
-            cover.elm.style.display = "none";
-            this.label.elm.style.display = "none";
-        }
+    open() {
+        this.cover.elm.style.display = "none";
+        this.label.elm.style.display = "none";
     }
     close() {
-        
+        this.cover.elm.style.display = "block";
+        this.label.elm.style.display = "block";
     }
     hide() {
-
+        this.sprite.elm.style.display = "none";
     }
 }
