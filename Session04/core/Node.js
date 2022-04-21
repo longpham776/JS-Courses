@@ -1,4 +1,5 @@
 export class Node { // entity
+
     constructor() {
         this._x = 0;
         this._y = 0;
@@ -24,7 +25,7 @@ export class Node { // entity
         this._scaleY = value;
         this.elm.style.transform = `scaleY(${this._scaleY})`;
     }
-    
+
     get x() { return this._x; }
     set x(value) {
         this._x = value;
@@ -51,7 +52,6 @@ export class Node { // entity
         this._height = value;
         this.elm.style.height = this._height + "px";
     }
-
     _createElement() {
         let elm = document.createElement("div");
         elm.style.position = "absolute";
@@ -69,7 +69,5 @@ export class Node { // entity
         this.elm.removeChild(node.elm);
         this.children.splice(index, 1);
     }
-
-
 
 }

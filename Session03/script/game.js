@@ -57,13 +57,12 @@ class Game extends Node {
     onClickCard(card){
         if(this.firstCard === null) {
             this.firstCard = card;
-            this.firstCard.open();
-        }
-        else if((this.firstCard) && (this.secondCard === null)) {
+            this.firstCard.flipCard();
+        }else if(this.secondCard === null) {
             this.secondCard = card;
             if(this.firstCard.index === this.secondCard.index) this.secondCard=null;
             else{
-                this.secondCard.open();
+                this.secondCard.flipCard();
                 setTimeout(() => {
                     this.compareCard(this.firstCard,this.secondCard);
                     this.firstCard = this.secondCard = null;    
@@ -78,16 +77,16 @@ class Game extends Node {
             this.score += 1000;
             this.label.text = "Score:" + this.score;
             console.log(this.score);
-            firstCard.hide();
-            secondCard.hide();
+            firstCard.scaleHideImage();
+            secondCard.scaleHideImage();
             console.log(true);
             console.log(this.cards);
         }else {
             this.score -= 500;
             this.label.text = "Score:" + this.score;
             console.log(this.score);
-            firstCard.close();
-            secondCard.close();
+            firstCard.flopCard();
+            secondCard.flopCard();
             console.log(false);
         }
         this.gameComplete();
