@@ -17,11 +17,11 @@ class Game extends Node {
     playGame(){
         this.play = new Label();
         this.play.elm.addEventListener("click",this._init.bind(this,this.play));
-        this.play.x = 200;
+        this.play.x = 130;
         this.play.backgroundColor = "white";
         this.play.fontSize = 50;
         this.play.fontColor = "red";
-        this.play.text = "Play Game";
+        this.play.text = "PlayGame";
         this.addChild(this.play);
     }
     _createCards() {
@@ -44,14 +44,20 @@ class Game extends Node {
     }
     _createScore(){
         this.score = 10000;
+        this.scoreLabel = new Label();
+        this.scoreLabel.fontSize = 50;
+        this.scoreLabel.fontColor = "black";
+        this.scoreLabel.y= -100;
+        this.scoreLabel.x = -0;
+        this.scoreLabel.text = "SCORE:";
+        this.addChild(this.scoreLabel);
         this.label = new Label();
+        this.label.id = "score";
         this.label.fontSize = 50;
         this.label.fontColor = "black";
         this.label.y= -100;
-        this.label.x = -0;
-        this.label._family = "bold";
-        this.label.text = "Score:" + this.score;
-        this.label.score = this.score;
+        this.label.x = 170;
+        this.label.text = this.score;
         this.addChild(this.label);
     }
     onClickCard(card){
@@ -65,8 +71,7 @@ class Game extends Node {
                 this.secondCard.flipCard();
                 setTimeout(() => {
                     this.compareCard(this.firstCard,this.secondCard);
-                    this.firstCard = this.secondCard = null;    
-                }, 500);
+                }, 2000);
                 console.log(this.firstCard);
                 console.log(this.secondCard);
             }
@@ -75,18 +80,22 @@ class Game extends Node {
     compareCard(firstCard,secondCard){
         if(firstCard.value === secondCard.value){
             this.score += 1000;
-            this.label.text = "Score:" + this.score;
-            console.log(this.score);
+            gsap.to(this.label,{text: this.score,duration: 1.5, snap:"text"});
             firstCard.scaleHideImage();
             secondCard.scaleHideImage();
+            setTimeout(()=>{
+                this.firstCard = this.secondCard = null;  
+            },1000)
             console.log(true);
-            console.log(this.cards);
         }else {
             this.score -= 500;
-            this.label.text = "Score:" + this.score;
+            gsap.to(this.label, {text: this.score,duration: 1.5, snap:"text"});
             console.log(this.score);
             firstCard.flopCard();
             secondCard.flopCard();
+            setTimeout(()=>{
+                this.firstCard = this.secondCard = null;  
+            },1000)
             console.log(false);
         }
         this.gameComplete();
@@ -103,9 +112,10 @@ class Game extends Node {
         this.addChild(this.reset);
     }
     gameComplete(){
-        let text = "You wanna try again! (Yes|No)";
+        let lose = "You lose! Are you wanna try again! (Yes|No)";
+        let win = "You win! Are you wanna try again! (Yes|No)";
         if(this.score <= 0) {
-            if(confirm(text) == true) {
+            if(confirm(lose) == true) {
                 this._init();
                 this.resetGame();
             }else {

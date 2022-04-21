@@ -50,14 +50,17 @@ export class Card extends Node {
     }
     flopCard() {
         const tl = gsap.timeline({ paused: true });
-        tl.to(this.cover, { scaleX: 1, duration: 0.5, delay: 2 });
+        tl.to(this.cover, { scaleX: 1, duration: 1, delay: 1 });
         tl.to(this.label, { scaleX: 1, duration: 0 });
-        tl.to(this.sprite, { scaleX: 1, duration: 0 });
+        tl.to(this.sprite, { scaleX: 0, duration: 0 });
         tl.play();
     }
     scaleHideImage() {
-        const tl = gsap.timeline({ paused: true });
-        
+        this.sprite.zIndex = 1;
+        gsap.to(this.sprite,{scaleX: 1,scaleY: 1, width: 200, height:200,x:-50,y:-50, duration: 1});
+        setTimeout(()=>{
+            this.sprite.elm.style.display = "none";
+        },1000)
     }
     // open() {
     //     this.cover.elm.style.display = "none";

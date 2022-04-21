@@ -9,7 +9,7 @@ export class Node { // entity
         this._scaleX = 1;
         this._scaleY = 1;
     }
-
+    
     get scaleX(){
         return this._scaleX;
     }
