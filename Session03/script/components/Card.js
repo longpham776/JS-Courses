@@ -44,15 +44,15 @@ export class Card extends Node {
         const tl = gsap.timeline({ paused: true });
         tl.to(this.sprite, { scaleX: 0, duration: 0 });
         tl.to(this.label, { scaleX: 0, duration: 0 });
-        tl.to(this.cover, { scaleX: 0, duration: 1 });
-        tl.to(this.sprite, { scaleX: 1, duration: 1 });
+        tl.to(this.cover, { scaleX: 0, duration: 0.2 });
+        tl.to(this.sprite, { scaleX: 1, duration: 0.2 });
         tl.play();
     }
     flopCard() {
         const tl = gsap.timeline({ paused: true });
-        tl.to(this.cover, { scaleX: 1, duration: 1, delay: 1 });
-        tl.to(this.label, { scaleX: 1, duration: 0 });
-        tl.to(this.sprite, { scaleX: 0, duration: 0 });
+        tl.to(this.sprite, { scaleX: 0, duration: 0.2 });
+        tl.to(this.cover, { scaleX: 1, duration: 0.2 });
+        tl.to(this.label, { scaleX: 1, duration: 0.2 });
         tl.play();
     }
     scaleHideImage() {
