@@ -8,8 +8,15 @@ export class Node { // entity
         this.children = [];
         this._scaleX = 1;
         this._scaleY = 1;
+        this._zIndex = 0;
     }
-    
+    get zIndex(){
+        return this._zIndex;
+    }
+    set zIndex(value){
+        this._zIndex = value;
+        this.elm.style.zIndex = value;
+    }
     get scaleX(){
         return this._scaleX;
     }
