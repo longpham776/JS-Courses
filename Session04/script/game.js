@@ -61,10 +61,7 @@ class Game extends Node {
     _createCards() {
         this.playSound(this.soundId[0]);
         setTimeout(()=>{
-            this.playSound(this.soundId[0]);
-            setTimeout(()=>{
-                this.playSound(this.soundId[4]);
-            },2000);
+            this.playSound(this.soundId[4]);
         },2000);
 
         this.cards = [];

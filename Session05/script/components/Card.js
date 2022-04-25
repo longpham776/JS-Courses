@@ -58,7 +58,7 @@ export class Card extends Node {
         tl.play();
     }
     scaleHideImage() {
-        this.sprite.zIndex = 1;
+        this.elm.style.zIndex = 2;
         gsap.to(this.sprite,{scaleX: 1,scaleY: 1, width: 230, height:230,x:-50,y:-50, duration: 1});
         setTimeout(()=>{
             this.sprite.elm.style.display = "none";

@@ -11,7 +11,7 @@ class Game extends Node {
     _init() {
         this.play.path = "./images/playButton_mouseclick.jpg";
         setTimeout(()=>{
-            this.elm.innerHTML="";
+            document.getElementsByTagName("div")[0].innerHTML="";
             this.soundId = {0:"music",1:"click",2:"match",3:"lose",4:"loading",5:"win"};
             this.count = 0;
             this._createCards();
@@ -61,10 +61,7 @@ class Game extends Node {
     _createCards() {
         this.playSound(this.soundId[0]);
         setTimeout(()=>{
-            this.playSound(this.soundId[0]);
-            setTimeout(()=>{
-                this.playSound(this.soundId[4]);
-            },2000);
+            this.playSound(this.soundId[4]);
         },2000);
 
         this.cards = [];
@@ -162,7 +159,7 @@ class Game extends Node {
                     this._init();
                     this.resetGame();
                 }else {
-                    this.elm.innerHTML="";
+                    document.getElementsByTagName("div")[0].innerHTML="";
                     this.playGame();
                 }
             },3200);
@@ -173,7 +170,7 @@ class Game extends Node {
                     this._init();
                     this.resetGame();
                 }else {
-                    this.elm.innerHTML="";
+                    document.getElementsByTagName("div")[0].innerHTML="";
                     this.playGame();
                 }
             },3200);
