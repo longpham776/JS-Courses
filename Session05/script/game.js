@@ -133,7 +133,7 @@ class Game extends Node {
     compareCard(firstCard,secondCard){
         if(firstCard.value === secondCard.value){
             this.playSound(this.soundId[2]);
-            this.count++;
+            this.count+=10;
             this.score += 1000;
             gsap.fromTo(this.label,{fontColor: "lightgreen"},{text: this.score,delay:0.1,fontColor: "white",duration: 1.5, snap:"text"});
             firstCard.scaleHideImage();
@@ -172,6 +172,7 @@ class Game extends Node {
             },3200);
         }else if(this.count === 10){
             this.playSound(this.soundId[5]);
+            this.animationWin();
             setTimeout(()=>{
                 if(confirm(win) == true) {
                     this._init();
@@ -182,6 +183,17 @@ class Game extends Node {
                 }
             },3200);
         }
+    }
+    animationWin(){
+        let win = new Sprite();
+        win.path = "https://media1.giphy.com/media/26tOZ42Mg6pbTUPHW/giphy.gif";
+        win.elm.style.opacity = 0.8;
+        win.zIndex = 1;
+        win.x=-1000;
+        win.y=-1000;
+        win.height = 2000;
+        win.width =3000;
+        this.addChild(win);
     }
 }
 
