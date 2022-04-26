@@ -11,14 +11,16 @@ class Game extends Node {
     _init() {
         this.play.path = "./images/playButton_mouseclick.jpg";
         setTimeout(()=>{
-            document.getElementsByTagName("div")[0].innerHTML="";
+            this.elm.innerHTML="";
             this.soundId = {0:"music",1:"click",2:"match",3:"lose",4:"loading",5:"win"};
             this.count = 0;
             this._createCards();
             this._createScore();
             this.score += 10000;
+            this.canClick = false;
             gsap.to(this.label,{text: this.score,duration: 6, snap:"text"});
             setTimeout(()=>{
+                this.canClick =true;
                 this.resetGame();
             },6000);
         },100);
@@ -75,15 +77,18 @@ class Game extends Node {
             this.card.setValue(index%10);
             this.cards.push(this.card);
             this.addChild(this.cards[index]);
-            tl.fromTo(this.cards[index].elm,{x: 240,y: 190, opacity: 0.2,zIndex: 0},{x: 240,y: 190,opacity:1, duration: 0.1})
+            this.cards[index].cover.elm.style.opacity = 0.8;
+            tl.fromTo(this.cards[index].elm,{x: 240,y: 190, opacity: 0,zIndex: 0},{x: 240,y: 190,opacity:1, duration: 0.1});
+            setTimeout(()=>{
+                this.cards[index].cover.elm.style.opacity = 1;
+            },2000);
             tl.play();
        }
         setTimeout(()=>{
             for (let index = 0; index < 20;index++){
                 let col = Math.floor(index/5);
                 let row = index % 5;
-                tl.fromTo(this.cards[index].elm,{x: 240,y: 190,opacity: 1},{ duration: 0.2,zIndex: 1, ease: "back.out(3)", x: row*120,y: col*120 });
-                tl.play();
+                TweenMax.fromTo(this.cards[index].elm,{x: 240,y: 190,opacity: 1},{ duration: 0.8,delay:index*0.2,zIndex: 1, ease: "back.out(3)", x: row*120,y: col*120 });
             }
         },2000);
     }
@@ -107,19 +112,21 @@ class Game extends Node {
     }
     onClickCard(card){
         this.playSound(this.soundId[1]);
-        if(this.firstCard === null) {
-            this.firstCard = card;
-            this.firstCard.flipCard();
-        }else if(this.secondCard === null) {
-            this.secondCard = card;
-            if(this.firstCard.index === this.secondCard.index) this.secondCard=null;
-            else{
-                this.secondCard.flipCard();
-                setTimeout(() => {
-                    this.compareCard(this.firstCard,this.secondCard);
-                }, 1000);
-                console.log(this.firstCard);
-                console.log(this.secondCard);
+        if(this.canClick){
+            if(this.firstCard === null) {
+                this.firstCard = card;
+                this.firstCard.flipCard();
+            }else if(this.secondCard === null) {
+                this.secondCard = card;
+                if(this.firstCard.index === this.secondCard.index) this.secondCard=null;
+                else{
+                    this.secondCard.flipCard();
+                    setTimeout(() => {
+                        this.compareCard(this.firstCard,this.secondCard);
+                    }, 1000);
+                    console.log(this.firstCard);
+                    console.log(this.secondCard);
+                }
             }
         }
     }
@@ -128,7 +135,7 @@ class Game extends Node {
             this.playSound(this.soundId[2]);
             this.count++;
             this.score += 1000;
-            gsap.to(this.label,{text: this.score,duration: 1.5, snap:"text"});
+            gsap.fromTo(this.label,{fontColor: "lightgreen"},{text: this.score,delay:0.1,fontColor: "white",duration: 1.5, snap:"text"});
             firstCard.scaleHideImage();
             secondCard.scaleHideImage();
             setTimeout(()=>{
@@ -138,7 +145,7 @@ class Game extends Node {
         }else {
             this.playSound(this.soundId[2]);
             this.score -= 500;
-            gsap.to(this.label, {text: this.score,duration: 1.5, snap:"text"});
+            gsap.fromTo(this.label,{fontColor: "red"},{text: this.score,delay:0.1,fontColor: "white",duration: 1.5, snap:"text"});
             console.log(this.score);
             firstCard.flopCard();
             secondCard.flopCard();
@@ -159,7 +166,7 @@ class Game extends Node {
                     this._init();
                     this.resetGame();
                 }else {
-                    document.getElementsByTagName("div")[0].innerHTML="";
+                    this.elm.innerHTML="";
                     this.playGame();
                 }
             },3200);
@@ -170,7 +177,7 @@ class Game extends Node {
                     this._init();
                     this.resetGame();
                 }else {
-                    document.getElementsByTagName("div")[0].innerHTML="";
+                    this.elm.innerHTML="";
                     this.playGame();
                 }
             },3200);
